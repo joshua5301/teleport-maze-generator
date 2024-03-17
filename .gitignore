@@ -1,6 +1,6 @@
-/teleMazeGenerator/.vs/
-/teleMazeGenerator/obj/
-/teleMazeGenerator/bin/
+/teleportMazeGenerator/.vs/
+/teleportMazeGenerator/obj/
+/teleportMazeGenerator/bin/
 *.vcxproj.filters
 *.vcxproj.user
 *.maz
