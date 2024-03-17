@@ -2,4 +2,5 @@
 /teleMazeGenerator/obj/
 /teleMazeGenerator/bin/
 *.vcxproj.filters
-*.vcxproj.users
+*.vcxproj.user
+*.maz
