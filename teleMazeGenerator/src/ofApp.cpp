@@ -458,35 +458,34 @@ void ofApp::DFSdraw()
 
 void ofApp::makeTeleMaze() {
 
+	auto getIntInput = [](const string& prompt, int min_input, int max_input) -> int {
+
+		string input_line;
+		int input;
+
+		while (1) {
+			cout << prompt;
+			getline(cin, input_line);
+			if (cin.fail()) break;
+			istringstream iss(input_line);
+			iss >> input;
+			if (iss.fail()) {
+				cout << "Input must be an integer." << endl;
+			}
+			else if (input > max_input || input < min_input) {
+				cout << "Input out of range." << endl;
+				cout << "Please enter a number between " << min_input << " and " << max_input << "." << endl;
+			}
+			else break;
+		}
+		return input;
+	};
+
+	height = getIntInput("Enter a height of a maze: ", 1, 50);
+	width = getIntInput("Enter a width of a maze: ", 1, 50);
 
 	int i;
 	srand(time(NULL));
-	
-	while (1) {
-		printf("Enter a width of a maze: ");
-		i = scanf("%d", &width);
-		if (i != 1) {
-			printf("Input a positive number.\n");
-		}
-		else if (width > 50) printf("Input is too large. - max width : 50\n");
-		else if (width <= 0) printf("Input a positive number.\n");
-		else break;
-		while (getchar() != '\n');
-	}
-	while (getchar() != '\n');
-	while (1) {
-		printf("Enter a height of a maze: ");
-		i = scanf("%d", &height);
-		if (i != 1) {
-			printf("Input a positive number.\n");
-		}
-		else if (height > 50) printf("Input is too large. - max height : 50\n");
-		else if (height <= 0) printf("Input a positive number.\n");
-		else break;
-		while (getchar() != '\n');
-	}
-	while (getchar() != '\n');
-	printf("\n");
 	initializeMaze();
 	for (i = 0; i < height - 1; i++) {
 		fillRoomNum(i);
