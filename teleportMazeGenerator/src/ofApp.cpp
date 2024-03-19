@@ -349,14 +349,14 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 void ofApp::freeMemory() {
 
-	// malloc한 memory를 free해주는 함수
+	// 동적할당 받은 memory를 해제해주는 함수
 	int i;
 	for (i = 0; i < height; i++) {
-		free(maze[i]);
-		free(tele[i]);
+		delete[] maze[i];
+		delete[] tele[i];
 	}
-	free(maze);
-	free(tele);
+	delete[] maze;
+	delete[] tele;
 	for (i = 0; i < candidateSets.size(); i++) {
 		candidateSets[i].coordinates.clear();
 		vector<pair<int, int>>().swap(candidateSets[i].coordinates);
@@ -501,11 +501,11 @@ void ofApp::makeTeleMaze() {
 
 void ofApp::initializeMaze() {
 	int i, j;
-	maze = (MazeRoom**)malloc(height * sizeof(MazeRoom*));
-	tele = (TeleRoom**)malloc(height * sizeof(TeleRoom*));
+	maze = new MazeRoom*[height];
+	tele = new TeleRoom*[height];
 	for (i = 0; i < height; i++) {
-		*(maze + i) = (MazeRoom*)malloc(width * sizeof(MazeRoom));
-		*(tele + i) = (TeleRoom*)malloc(width * sizeof(TeleRoom));
+		*(maze + i) = new MazeRoom[width];
+		*(tele + i) = new TeleRoom[width];
 		for (j = 0; j < width; j++) {
 			maze[i][j].roomNum = -1000;
 			maze[i][j].visited = 0;
@@ -566,7 +566,7 @@ void ofApp::eraseDownWalls(int rowN) {
 	int setN = 0;
 	unsigned char findFlag = 0;
 
-	RoomNumSet *headSet = (RoomNumSet*)malloc(1 * sizeof(RoomNumSet));
+	RoomNumSet *headSet = new RoomNumSet;
 	headSet->nextSet = NULL;
 	RoomNumSet *setPtr;
 	Node *indexPtr;
@@ -587,7 +587,7 @@ void ofApp::eraseDownWalls(int rowN) {
 				(setPtr->elementN)++;
 				if (maze[rowN][j].hasDownWall == 0) setPtr->connected = 1;
 				for (indexPtr = setPtr->index; indexPtr->next != NULL; indexPtr = indexPtr->next);
-				indexPtr->next = (Node*)malloc(1 * sizeof(Node));
+				indexPtr->next = new Node;
 				indexPtr->next->data = j;
 				indexPtr->next->next = NULL;
 				findFlag = 1;
@@ -595,9 +595,9 @@ void ofApp::eraseDownWalls(int rowN) {
 			}
 		}
 		if (findFlag == 0) {
-			setPtr->nextSet = (RoomNumSet*)malloc(1 * sizeof(RoomNumSet));
+			setPtr->nextSet = new RoomNumSet;
 			setPtr->nextSet->nextSet = NULL;
-			setPtr->nextSet->index = (Node*)malloc(1 * sizeof(Node));
+			setPtr->nextSet->index = new Node;
 
 			setPtr->nextSet->roomNum = maze[rowN][j].roomNum;
 			setPtr->nextSet->elementN = 1;
