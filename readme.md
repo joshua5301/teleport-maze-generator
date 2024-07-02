@@ -3,6 +3,8 @@
 
 Eller's algorithm을 기반으로 한 알고리즘을 통해 teleport platform이 포함된 perfect maze를 생성합니다.
 
+![Sample](sample_maze-1.png)
+
 <br />
 
 ## How to use
